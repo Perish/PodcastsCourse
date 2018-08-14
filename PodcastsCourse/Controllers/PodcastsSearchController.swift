@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     let podcasts = [
@@ -33,12 +34,26 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         navigationItem.hidesSearchBarWhenScrolling = false
         // 指示在搜索过程中基础内容是否被遮挡
         searchController.dimsBackgroundDuringPresentation = false
+//        searchController.hidesNavigationBarDuringPresentation = false
+//        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+//        print(searchText)
         // later implement Alamofire to search iTunes API
+        
+        let url = "https://itunes.apple.com/search?term=\(searchText)"
+        Alamofire.request(url).responseData { (dataResponse) in
+            if let err = dataResponse.error {
+                print("Failed to contact yahoo", err)
+                return
+            }
+            
+            guard let data = dataResponse.data else { return }
+            let dummyString = String(data: data, encoding: .utf8)
+            print(dummyString ?? "")
+        }
     }
     
     fileprivate func setupTableView() {
