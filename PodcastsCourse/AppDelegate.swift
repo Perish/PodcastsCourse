@@ -15,7 +15,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // 在iOS App中，UIWindow是最顶层的界面内容，我们使用UIWindow和UIView来呈现界面。
+        // UIWindow并不包含任何默认的内容，但是它被当作UIView的容器，用于放置应用中所有的UIView。
+        // UIWindow继承自UIView，所以UIWindow除了具有UIView的所有功能之外，还增加了一些特有的属性和方法，
+        // 而我们最常用的方法，就是在App刚启动时，
+        // 调用UIWindow的rootViewController（必须指定根控制器） 和 makeKeyAndVisible方法
+        // UIWindow的主要作用有：
+        // 1.作为UIView的最顶层容器，包含应用显示所有的UIView；
+        // 2.传递触摸消息和键盘事件给UIView
+        window = UIWindow()
+        // 让当前UIWindow变成keyWindow（主窗口），并显示出来
+        window?.makeKeyAndVisible()
+        // 窗口的根视图控制器。
+        window?.rootViewController = MainTabBarController()
+        
         return true
     }
 

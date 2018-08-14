@@ -12,6 +12,9 @@
 		6551B42B2121CD8C00E0455D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6551B4292121CD8C00E0455D /* Main.storyboard */; };
 		6551B42D2121CD8E00E0455D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6551B42C2121CD8E00E0455D /* Assets.xcassets */; };
 		6551B4302121CD8E00E0455D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6551B42E2121CD8E00E0455D /* LaunchScreen.storyboard */; };
+		6551B4382121CE1000E0455D /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6551B4372121CE1000E0455D /* MainTabBarController.swift */; };
+		6551B43B2122E75900E0455D /* PodcastsSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6551B43A2122E75900E0455D /* PodcastsSearchController.swift */; };
+		6551B43E2122E98D00E0455D /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6551B43D2122E98D00E0455D /* Podcast.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		6551B42C2121CD8E00E0455D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6551B42F2121CD8E00E0455D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6551B4312121CD8E00E0455D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6551B4372121CE1000E0455D /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		6551B43A2122E75900E0455D /* PodcastsSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastsSearchController.swift; sourceTree = "<group>"; };
+		6551B43D2122E98D00E0455D /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +60,33 @@
 		6551B4242121CD8C00E0455D /* PodcastsCourse */ = {
 			isa = PBXGroup;
 			children = (
+				6551B43C2122E97400E0455D /* Models */,
+				6551B4392122E73900E0455D /* Controllers */,
 				6551B4252121CD8C00E0455D /* AppDelegate.swift */,
 				6551B4272121CD8C00E0455D /* ViewController.swift */,
 				6551B4292121CD8C00E0455D /* Main.storyboard */,
 				6551B42C2121CD8E00E0455D /* Assets.xcassets */,
 				6551B42E2121CD8E00E0455D /* LaunchScreen.storyboard */,
 				6551B4312121CD8E00E0455D /* Info.plist */,
+				6551B4372121CE1000E0455D /* MainTabBarController.swift */,
 			);
 			path = PodcastsCourse;
+			sourceTree = "<group>";
+		};
+		6551B4392122E73900E0455D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6551B43A2122E75900E0455D /* PodcastsSearchController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		6551B43C2122E97400E0455D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6551B43D2122E98D00E0455D /* Podcast.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +160,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6551B43B2122E75900E0455D /* PodcastsSearchController.swift in Sources */,
 				6551B4282121CD8C00E0455D /* ViewController.swift in Sources */,
 				6551B4262121CD8C00E0455D /* AppDelegate.swift in Sources */,
+				6551B4382121CE1000E0455D /* MainTabBarController.swift in Sources */,
+				6551B43E2122E98D00E0455D /* Podcast.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
