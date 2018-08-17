@@ -26,12 +26,11 @@ class EpisodesController: UITableViewController {
         guard let url = URL(string: secureFeedUrl) else { return }
         let parser = FeedParser(URL: url)
         parser.parseAsync { (result) in
-            print(result.isSuccess)
             switch result {
             case let .rss(feed):
                 var episodes = [Episode]()
                 feed.items?.forEach({ (feedItem) in
-                    let episode = Episode(title: feedItem.title ?? "")
+                    let episode = Episode(feedItem: feedItem)
                     episodes.append(episode)
                 })
                 self.episodes = episodes
@@ -48,16 +47,8 @@ class EpisodesController: UITableViewController {
         }
     }
     
-    struct Episode {
-        let title: String
-    }
     
-    var episodes = [
-        Episode(title: "First Episode"),
-        Episode(title: "Second Episode"),
-        Episode(title: "Third Episode"),
-        Episode(title: "Forth Episode")
-    ]
+    var episodes = [Episode]()
     
     fileprivate let cellId = "cellId"
     
@@ -69,7 +60,8 @@ class EpisodesController: UITableViewController {
     //MARK:- Setup Work
     
     fileprivate func setupTableView() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        let nib = UINib(nibName: "EpisodeCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: cellId)
         tableView.tableFooterView = UIView()
     }
     
@@ -81,10 +73,14 @@ class EpisodesController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodeCell
         let episode = self.episodes[indexPath.row]
-        cell.textLabel?.text = episode.title
+        cell.episode = episode
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 134
     }
     
 }
