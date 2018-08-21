@@ -39,11 +39,40 @@ class PlayerDetailsView: UIView {
         return avPlayer
     }()
     
+    // 在从接口生成器存档或NIB文件加载之后准备服务的接收器。
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        let time = CMTimeMake(1, 3)
+        let times = [NSValue(time: time)]
+        player.addBoundaryTimeObserver(forTimes: times, queue: .main) {
+            print("Episode started playing")
+            self.enlargeEpisodeImageView()
+        }
+    }
+    
     //MARK:- IB Actions and Outlet
     
     @IBAction func handleDismiss(_ sender: Any) {
         self.removeFromSuperview()
     }
+    
+    fileprivate func enlargeEpisodeImageView() {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            
+            self.episodeImageView.transform = .identity
+            
+        }, completion: nil)
+    }
+    
+    fileprivate let shrunkenTransform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    
+    fileprivate func shrinkEpisodeImageView() {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.episodeImageView.transform = self.shrunkenTransform
+        }, completion: nil)
+    }
+    
     @IBOutlet weak var playPauseButton: UIButton! {
         didSet {
             playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
@@ -56,14 +85,22 @@ class PlayerDetailsView: UIView {
         if player.timeControlStatus == .paused {
             player.play()
             playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            enlargeEpisodeImageView()
         } else {
             player.pause()
             playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            shrinkEpisodeImageView()
         }
     }
     
     @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var episodeImageView: UIImageView!
+    @IBOutlet weak var episodeImageView: UIImageView! {
+        didSet {
+            episodeImageView.layer.cornerRadius = 5
+            episodeImageView.clipsToBounds = true
+            episodeImageView.transform = shrunkenTransform
+        }
+    }
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
             titleLabel.numberOfLines = 2
