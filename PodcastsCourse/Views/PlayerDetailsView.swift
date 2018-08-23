@@ -43,12 +43,12 @@ class PlayerDetailsView: UIView {
         // 观察间隔, CMTime 为2分之一秒
         let interval = CMTimeMake(1, 2)
         // AVPlayer 给我们直接提供了 观察播放进度更为方便的方法, 方法名如其意， “添加周期时间观察者”
-        player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { (time) in
-            self.currentTimeLabel.text = time.toDisplayString()
-            let durationTime = self.player.currentItem?.duration
-            self.durationLabel.text = durationTime?.toDisplayString()
+        player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] (time) in
+            self?.currentTimeLabel.text = time.toDisplayString()
+            let durationTime = self?.player.currentItem?.duration
+            self?.durationLabel.text = durationTime?.toDisplayString()
             
-            self.updateCurrentTimeSlider()
+            self?.updateCurrentTimeSlider()
         }
     }
     
@@ -67,10 +67,17 @@ class PlayerDetailsView: UIView {
         
         let time = CMTimeMake(1, 3)
         let times = [NSValue(time: time)]
-        player.addBoundaryTimeObserver(forTimes: times, queue: .main) {
+        
+        // player has a reference to self
+        // self has a reference to player
+        player.addBoundaryTimeObserver(forTimes: times, queue: .main) { [weak self] in
             print("Episode started playing")
-            self.enlargeEpisodeImageView()
+            self?.enlargeEpisodeImageView()
         }
+    }
+    
+    deinit {
+        print("PlayerDetailsView memory being reclaimed...")
     }
     
     //MARK:- IB Actions and Outlet

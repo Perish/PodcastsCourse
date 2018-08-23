@@ -19,15 +19,19 @@ class APIService {
     func fetchEpisodes(feedUrl: String, completionHandler: @escaping ([Episode]) -> ()) {
         let secureFeedUrl = feedUrl.contains("https") ? feedUrl : feedUrl.replacingOccurrences(of: "http", with: "https")
         guard let url = URL(string: secureFeedUrl) else { return }
-        let parser = FeedParser(URL: url)
-        parser.parseAsync { (result) in
-            if let err = result.error {
-                print("Failed to parse feed: ", err)
-                return
+        DispatchQueue.global(qos: .background).async {
+            print("Before parser")
+            let parser = FeedParser(URL: url)
+            print("After parser")
+            parser.parseAsync { (result) in
+                if let err = result.error {
+                    print("Failed to parse feed: ", err)
+                    return
+                }
+                guard let feed = result.rssFeed else {return}
+                let episodes = feed.toEpisodes()
+                completionHandler(episodes)
             }
-            guard let feed = result.rssFeed else {return}
-            let episodes = feed.toEpisodes()
-            completionHandler(episodes)
         }
     }
     
