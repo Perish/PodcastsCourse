@@ -65,7 +65,7 @@ class EpisodesController: UITableViewController {
         print("Trying to play episode:", episode.title)
         let window = UIApplication.shared.keyWindow
         
-        let playerDetailsView = Bundle.main.loadNibNamed("PlayerDetailsView", owner: self, options: nil)?.first as! PlayerDetailsView
+        let playerDetailsView = PlayerDetailsView.initFromNib()
         
         playerDetailsView.episode = episode
         
